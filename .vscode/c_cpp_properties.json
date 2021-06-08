@@ -1,0 +1,41 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "/home/lee/avrLEDMatrixPCB/include",
+                "/home/lee/avrLEDMatrixPCB/src",
+                "/home/lee/.platformio/packages/tool-unity",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/home/lee/avrLEDMatrixPCB/include",
+                    "/home/lee/avrLEDMatrixPCB/src",
+                    "/home/lee/.platformio/packages/tool-unity",
+                    ""
+                ]
+            },
+            "defines": [
+                "F_CPU=8000000L",
+                "PLATFORMIO=50101",
+                "__AVR_ATmega328__",
+                ""
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "compilerPath": "/home/lee/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
+            "compilerArgs": [
+                "-mmcu=atmega328",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
