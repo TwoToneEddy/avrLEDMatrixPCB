@@ -62,6 +62,16 @@ void setColOutput(int output,int val)
     }
 }
 
+void clearLEDS(){
+
+  for(int row = 0; row < 6; row++){
+    for(int col = 0; col < 6; col++){
+      setLED(row,col,0);
+    }
+  }
+
+}
+
 int setLED(int row, int col, int duty){
 
   volatile uint16_t *rowPtr;

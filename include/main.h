@@ -20,6 +20,7 @@ void configureDigitalOutputs();
 volatile uint16_t * getRowPtr(int col);
 void setRowAndDuty(volatile uint16_t *OCRxx,int dutyCycle);
 void setColOutput(int output,int val);
+void clearLEDS();
 int setLED(int row, int col, int duty);
 int qtestLeds();
 int testLeds(int del, int mode);
