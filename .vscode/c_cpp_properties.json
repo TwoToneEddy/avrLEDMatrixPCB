@@ -24,15 +24,15 @@
             },
             "defines": [
                 "F_CPU=8000000L",
-                "PLATFORMIO=50101",
-                "__AVR_ATmega328__",
+                "PLATFORMIO=50204",
+                "__AVR_ATmega328P__",
                 ""
             ],
             "cStandard": "c11",
             "cppStandard": "c++11",
             "compilerPath": "/home/lee/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
             "compilerArgs": [
-                "-mmcu=atmega328",
+                "-mmcu=atmega328p",
                 ""
             ]
         }

@@ -29,6 +29,16 @@
             "projectEnvName": "program_via_ArduinoISP",
             "toolchainBinDir": "/home/lee/.platformio/packages/toolchain-atmelavr/bin",
             "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PIO Debug (without uploading)",
+            "executable": "/home/lee/avrLEDMatrixPCB/.pio/build/program_via_ArduinoISP/firmware.elf",
+            "projectEnvName": "program_via_ArduinoISP",
+            "toolchainBinDir": "/home/lee/.platformio/packages/toolchain-atmelavr/bin",
+            "internalConsoleOptions": "openOnSessionStart",
+            "loadMode": "manual"
         }
     ]
 }
