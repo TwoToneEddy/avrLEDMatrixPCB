@@ -1,5 +1,15 @@
 #include "main.h"
 
+uint8_t countSetBits(uint8_t n)
+{
+    uint8_t count = 0;
+    while (n) {
+        count += n & 1;
+        n >>= 1;
+    }
+    return count;
+}
+
 
 volatile uint16_t * getRowPtr(int col){
   switch (col)
@@ -39,9 +49,9 @@ volatile uint16_t * getRowPtr(int col){
 
 }
 
-void setRowAndDuty(volatile uint16_t *OCRxx,int dutyCycle){
+void setDuty(int dutyCycle){
   int weight = 0xFF / 100;
-  *OCRxx = 0xFF - (dutyCycle*weight);
+  OCR0A= 0xFF - (dutyCycle*weight);
 }
 
 /*
@@ -72,68 +82,24 @@ void clearLEDS(){
 
 }
 
-int setLED(int row, int col, int duty){
+int setLED(uint8_t byte0,uint8_t byte1,uint8_t byte2,int duty){
 
-  volatile uint16_t *rowPtr;
-  rowPtr = getRowPtr(row);
+  SPDR = byte0;
+  while(!(SPSR & (1<<SPIF)));
+  SPDR = byte1;
+  while(!(SPSR & (1<<SPIF)));
+  SPDR = byte2;
+  while(!(SPSR & (1<<SPIF)));
 
-  setRowAndDuty(rowPtr,duty);
-  setColOutput(col,duty>0);
-
+  //Toggle latch to copy data to the storage register
+  SHIFT_PORT |= LATCH;
+  SHIFT_PORT &= ~LATCH;
+  
+  setDuty(duty);
   return 0;
 }
 
-int qtestLeds(){
-
-    int duty = 0;
-    int del = 10;
-    int mode = 0;
-    for(int row = 0; row < 6; row++){
-        for(int col = 0; col < 6; col++){
-            if(mode == 1){
-                while(duty < 100){
-                    duty++;
-                    setLED(row,col,duty);
-                    _delay_ms(del);
-                }
-                while(duty > 0){
-                    duty --;
-                    setLED(row,col,duty);
-                    _delay_ms(del);
-                }
-            }else{
-                setLED(row,col,100);
-                _delay_ms(del);
-                setLED(row,col,0);
-                _delay_ms(del);
-            }
-        }
-    }
-
+int qtestLeds(){  
 }
 int testLeds(int del, int mode){
-
-    int duty = 0;
-    for(int row = 0; row < 6; row++){
-        for(int col = 0; col < 6; col++){
-            if(mode == 1){
-                while(duty < 100){
-                    duty++;
-                    setLED(row,col,duty);
-                    _delay_ms(del);
-                }
-                while(duty > 0){
-                    duty --;
-                    setLED(row,col,duty);
-                    _delay_ms(del);
-                }
-            }else{
-                setLED(row,col,100);
-                _delay_ms(del);
-                setLED(row,col,0);
-                _delay_ms(del);
-            }
-        }
-    }
-
 }
