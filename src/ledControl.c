@@ -10,7 +10,7 @@ uint8_t countSetBits(uint8_t n)
     return count;
 }
 
-
+/*
 volatile uint16_t * getRowPtr(int col){
   switch (col)
   {
@@ -47,7 +47,7 @@ volatile uint16_t * getRowPtr(int col){
     break;
   }
 
-}
+}*/
 
 void setDuty(int dutyCycle){
   int weight = 0xFF / 100;
@@ -57,6 +57,7 @@ void setDuty(int dutyCycle){
 /*
     Sets single output to selected value, clears all other outputs
 */
+/*
 void setColOutput(int output,int val)
 {
     // Clear outputs
@@ -71,7 +72,8 @@ void setColOutput(int output,int val)
             PORTD |= (1 << digitalOuputs[output]);
     }
 }
-
+*/
+/*
 void clearLEDS(){
 
   for(int row = 0; row < 6; row++){
@@ -80,7 +82,7 @@ void clearLEDS(){
     }
   }
 
-}
+}*/
 
 int setLED(uint8_t byte0,uint8_t byte1,uint8_t byte2,int duty){
 

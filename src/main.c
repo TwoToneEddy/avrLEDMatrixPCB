@@ -1,10 +1,6 @@
 #include "main.h"
 
-#define SHIFT_REGISTER DDRB
-#define SHIFT_PORT PORTB
-#define DATA (1<<PB3)           //MOSI (SI)
-#define LATCH (1<<PB2)          //SS   (RCK)
-#define CLOCK (1<<PB5)          //SCK  (SCK)
+
 
 /*
 
@@ -39,10 +35,13 @@ int main(void) {
 
 
     char buffer[64];
-    uint8_t len,col,row,duty;
+    uint8_t len,byte0,byte1,byte2,duty;
     uint8_t bufIndx = 0;
     uint8_t commandCounter = 0;
     char *dutyStr;
+    char *byte0Str;
+    char *byte1Str;
+    char *byte2Str;
     UART_Init(9600);
     configurePWM();
     configureSPI();
@@ -60,27 +59,32 @@ int main(void) {
           bufIndx = 0;
           commandCounter = 0;
           
-          if(strchr(buffer,'c')==NULL || strchr(buffer,'d')==NULL || strchr(buffer,'r')==NULL || strlen(buffer)!=10)
+          if(1==0)
             UART_Printf("Invalid command");
           else{
-            while(commandCounter < 3) {
-              switch (buffer[bufIndx]) {
-                  case 'c':
-                      bufIndx++;
-                      col = buffer[bufIndx] - '0';
+            while(commandCounter < 4) {
+              switch (commandCounter) {
+                  case 0:
+                      byte0Str = &buffer[bufIndx];
+                      byte0 = atoi(byte0Str);
                       break;
-                  case 'r':
-                      bufIndx++;
-                      row = buffer[bufIndx] - '0';
+                  case 1:
+                      byte1Str = &buffer[bufIndx];
+                      byte1 = atoi(byte1Str);
                       break;
-                  case 'd':
-                      bufIndx++;
+                  case 2:
+                      byte2Str = &buffer[bufIndx];
+                      byte2 = atoi(byte2Str);
+                      break;
+                  case 3:
                       dutyStr = &buffer[bufIndx];
-                      duty=atoi(dutyStr);
+                      duty = atoi(dutyStr);
                       break;
               }
               commandCounter++;
-              if(commandCounter < 3) {
+              
+              //Iterate through to next comma
+              if(commandCounter < 4) {
                   while (buffer[bufIndx] != ',') {
                       bufIndx++;
                   }
@@ -88,18 +92,16 @@ int main(void) {
               }
 
             }
-            clearLEDS();
-            setLED(row,col,duty);
+            //clearLEDS();
+            setLED(byte0,byte1,byte2,duty);
         }
 
           if(buffer[0] == 'T'){
             UART_Printf("Running full LED test\n");
-            testLeds(1,1);
           }
 
           if(buffer[0] == 't'){
             UART_Printf("Running fast LED test\n");
-            testLeds(10,0);
           }
 
         }
