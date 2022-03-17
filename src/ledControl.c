@@ -86,12 +86,12 @@ void clearLEDS(){
 
 int setLED(uint8_t byte0,uint8_t byte1,uint8_t byte2,int duty){
 
-  SPDR = byte0;
-  while(!(SPSR & (1<<SPIF)));
-  SPDR = byte1;
-  while(!(SPSR & (1<<SPIF)));
-  SPDR = byte2;
-  while(!(SPSR & (1<<SPIF)));
+  SPDR0 = byte0;
+  while(!(SPSR0 & (1<<SPIF)));
+  SPDR0 = byte1;
+  while(!(SPSR0 & (1<<SPIF)));
+  SPDR0 = byte2;
+  while(!(SPSR0 & (1<<SPIF)));
 
   //Toggle latch to copy data to the storage register
   SHIFT_PORT |= LATCH;
@@ -101,7 +101,3 @@ int setLED(uint8_t byte0,uint8_t byte1,uint8_t byte2,int duty){
   return 0;
 }
 
-int qtestLeds(){  
-}
-int testLeds(int del, int mode){
-}

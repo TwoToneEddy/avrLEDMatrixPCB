@@ -47,7 +47,7 @@ int main(void) {
     configureSPI();
 
 
-    qtestLeds();
+    //qtestLeds();
 
 
     UART_Printf("Board initialised\n");

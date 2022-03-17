@@ -33,7 +33,7 @@ void configureSPI()
     SHIFT_PORT &= ~(DATA | LATCH | CLOCK);        //Set control pins low
  
     //Setup SPI
-    SPCR = (1<<SPE) | (1<<MSTR);  //Start SPI as Master
+    SPCR0 = (1<<SPE) | (1<<MSTR);  //Start SPI as Master
  
     //Pull LATCH low (Important: this is necessary to start the SPI transfer!)
     SHIFT_PORT &= ~LATCH;

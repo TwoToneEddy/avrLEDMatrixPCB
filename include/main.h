@@ -21,15 +21,12 @@
 #define CLOCK (1<<PB5)          //SCK  (SCK)
 
 void configurePWM();
-void configureDigitalOutputs();
-
+void configureSPI();
 volatile uint16_t * getRowPtr(int col);
 void setRowAndDuty(volatile uint16_t *OCRxx,int dutyCycle);
 void setColOutput(int output,int val);
 void clearLEDS();
-int setLED(int row, int col, int duty);
-int qtestLeds();
-int testLeds(int del, int mode);
+int setLED(uint8_t byte0,uint8_t byte1,uint8_t byte2,int duty);
 
 
 // Array to store output pins in an iterable way
