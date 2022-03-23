@@ -45,8 +45,18 @@ int main(void) {
     UART_Init(9600);
     configurePWM();
     configureSPI();
+    
+    _delay_ms(1000);
 
-
+    setDuty(100);
+    SPDR0 = 0b01010101;
+    while(!(SPSR0 & (1<<SPIF)));
+    SPDR0 = 0b01010101;
+    while(!(SPSR0 & (1<<SPIF)));
+    SPDR0 = 0b01010101;
+    while(!(SPSR0 & (1<<SPIF)));
+    SHIFT_PORT |= LATCH;
+    SHIFT_PORT &= ~LATCH;
     //qtestLeds();
 
 
