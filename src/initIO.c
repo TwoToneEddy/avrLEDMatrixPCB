@@ -24,6 +24,7 @@ void configurePWM(){
     //OCR1B = 0; //PB2
     //OCR2A = 0; //PB3
     //OCR2B = 0; //PD3
+    DDRD |= (1 << PIND6);
 }
 
 void configureSPI()
@@ -36,6 +37,16 @@ void configureSPI()
     SPCR0 = (1<<SPE) | (1<<MSTR);  //Start SPI as Master
  
     //Pull LATCH low (Important: this is necessary to start the SPI transfer!)
+    SHIFT_PORT &= ~LATCH;
+
+
+    SPDR0 = 0;
+    while(!(SPSR0 & (1<<SPIF)));
+    SPDR0 = 0;
+    while(!(SPSR0 & (1<<SPIF)));
+    SPDR0 = 0;
+    while(!(SPSR0 & (1<<SPIF)));
+    SHIFT_PORT |= LATCH;
     SHIFT_PORT &= ~LATCH;
     
 }

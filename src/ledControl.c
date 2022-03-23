@@ -84,13 +84,21 @@ void clearLEDS(){
 
 }*/
 
+uint8_t reverse(uint8_t b) {
+   b = (b & 0xF0) >> 4 | (b & 0x0F) << 4;
+   b = (b & 0xCC) >> 2 | (b & 0x33) << 2;
+   b = (b & 0xAA) >> 1 | (b & 0x55) << 1;
+   return b;
+}
+
+// Byte 2 only has 5 bits
 int setLED(uint8_t byte0,uint8_t byte1,uint8_t byte2,int duty){
 
-  SPDR0 = byte0;
+  SPDR0 = reverse(byte2<<3);
   while(!(SPSR0 & (1<<SPIF)));
-  SPDR0 = byte1;
+  SPDR0 = reverse(byte1);
   while(!(SPSR0 & (1<<SPIF)));
-  SPDR0 = byte2;
+  SPDR0 = reverse(byte0);
   while(!(SPSR0 & (1<<SPIF)));
 
   //Toggle latch to copy data to the storage register

@@ -27,6 +27,7 @@ void setRowAndDuty(volatile uint16_t *OCRxx,int dutyCycle);
 void setColOutput(int output,int val);
 void clearLEDS();
 int setLED(uint8_t byte0,uint8_t byte1,uint8_t byte2,int duty);
+uint8_t reverse(uint8_t b);
 
 
 // Array to store output pins in an iterable way
