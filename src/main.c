@@ -33,15 +33,15 @@ Pinout:
 
 int main(void) {
 
-
     char buffer[64];
     uint8_t len,byte0,byte1,byte2,duty;
     uint8_t bufIndx = 0;
     uint8_t commandCounter = 0;
+    uint8_t noOfCommandedCols = 0;
     char *dutyStr;
-    char *byte0Str;
-    char *byte1Str;
-    char *byte2Str;
+    char *demandStr;
+    long demand;
+
     UART_Init(9600);
     configurePWM();
     configureSPI();
@@ -54,28 +54,22 @@ int main(void) {
     {
         len = UART_RxString(buffer);
         if(len > 1){
+
           UART_Printf("Recieved: %s, len: %d\n",buffer,len);
           bufIndx = 0;
           commandCounter = 0;
+          noOfCommandedCols = 0;
           
           if(1==0)
             UART_Printf("Invalid command");
           else{
-            while(commandCounter < 4) {
+            while(commandCounter < 2) {
               switch (commandCounter) {
                   case 0:
-                      byte0Str = &buffer[bufIndx];
-                      byte0 = atoi(byte0Str);
+                      demandStr = &demandStr[bufIndx];
+                      demand = atol(demandStr);
                       break;
                   case 1:
-                      byte1Str = &buffer[bufIndx];
-                      byte1 = atoi(byte1Str);
-                      break;
-                  case 2:
-                      byte2Str = &buffer[bufIndx];
-                      byte2 = atoi(byte2Str);
-                      break;
-                  case 3:
                       dutyStr = &buffer[bufIndx];
                       duty = atoi(dutyStr);
                       break;
@@ -83,7 +77,7 @@ int main(void) {
               commandCounter++;
               
               //Iterate through to next comma
-              if(commandCounter < 4) {
+              if(commandCounter < 2) {
                   while (buffer[bufIndx] != ',') {
                       bufIndx++;
                   }
@@ -91,23 +85,25 @@ int main(void) {
               }
 
             }
-            //clearLEDS();
-            setLED(byte0,byte1,byte2,duty);
-        }
 
-          if(buffer[0] == 'T'){
-            UART_Printf("Running full LED test\n");
-          }
+            // Split long into bytes
+            byte0= demand & 0x0000FF;
+            byte1= (demand & 0x00FF00)>>8;
+            byte2= (demand & 0xFF0000)>>16;
 
-          if(buffer[0] == 't'){
-            UART_Printf("Running fast LED test\n");
+            noOfCommandedCols += countSetBits(byte0);
+            noOfCommandedCols += countSetBits(byte1);
+            noOfCommandedCols += countSetBits(byte2);
+
+            if(noOfCommandedCols > MAX_COLS)
+              UART_Printf("Too many LEDs\n");
+            else
+              setLED(byte0,byte1,byte2,duty);
           }
 
         }
     }
     return (0);
-
-
 
 }
 

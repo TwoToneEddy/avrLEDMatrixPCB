@@ -20,6 +20,8 @@
 #define LATCH (1<<PB2)          //SS   (RCK)
 #define CLOCK (1<<PB5)          //SCK  (SCK)
 
+#define MAX_COLS 3
+
 void configurePWM();
 void configureSPI();
 volatile uint16_t * getRowPtr(int col);
