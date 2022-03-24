@@ -38,6 +38,7 @@ int main(void) {
     uint8_t bufIndx = 0;
     uint8_t commandCounter = 0;
     uint8_t noOfCommandedCols = 0;
+    uint8_t invalidCommand = 0;
     char *dutyStr;
     char *demandStr;
     long demand;
@@ -59,6 +60,11 @@ int main(void) {
           bufIndx = 0;
           commandCounter = 0;
           noOfCommandedCols = 0;
+          invalidCommand = 0;
+
+          // Set to invalid values
+          demand = -1;
+          duty = 255;
           
           if(1==0)
             UART_Printf("Invalid command");
@@ -95,8 +101,8 @@ int main(void) {
             noOfCommandedCols += countSetBits(byte1);
             noOfCommandedCols += countSetBits(byte2);
 
-            if(noOfCommandedCols > MAX_COLS)
-              UART_Printf("Too many LEDs\n");
+            if((demand > 1835008) || (demand < 0) || (duty > 100) || (noOfCommandedCols > MAX_COLS))
+              UART_Printf("Invalid command\n");
             else
               setLED(byte0,byte1,byte2,duty);
           }
