@@ -25,11 +25,11 @@ uint8_t reverse(uint8_t b) {
 // Byte 2 only has 5 bits
 int setLED(uint8_t byte0,uint8_t byte1,uint8_t byte2,int duty){
 
-  SPDR0 = reverse(byte2<<3);
+  SPDR0 = byte2;
   while(!(SPSR0 & (1<<SPIF)));
-  SPDR0 = reverse(byte1);
+  SPDR0 = byte1;
   while(!(SPSR0 & (1<<SPIF)));
-  SPDR0 = reverse(byte0);
+  SPDR0 = byte0;
   while(!(SPSR0 & (1<<SPIF)));
 
   //Toggle latch to copy data to the storage register

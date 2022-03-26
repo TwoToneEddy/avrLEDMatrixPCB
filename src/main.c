@@ -63,7 +63,7 @@ int main(void) {
           invalidCommand = 0;
 
           // Set to invalid values
-          demand = -1;
+          //demand = -1;
           duty = 255;
           
           if(1==0)
@@ -72,7 +72,7 @@ int main(void) {
             while(commandCounter < 2) {
               switch (commandCounter) {
                   case 0:
-                      demandStr = &demandStr[bufIndx];
+                      demandStr = &buffer[bufIndx];
                       demand = atol(demandStr);
                       break;
                   case 1:

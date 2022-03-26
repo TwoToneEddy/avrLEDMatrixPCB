@@ -1,5 +1,6 @@
 #include <avr/io.h>      // this contains all the IO port definitions
 #include <util/delay.h>
+#include <stdlib.h>
 #include "uart.h"
 
 
