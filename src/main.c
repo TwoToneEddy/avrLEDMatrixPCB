@@ -1,36 +1,5 @@
 #include "main.h"
 
-
-
-/*
-
-Pinout:
-
-  PWM Row:
-  0 PD6
-  1 PD5
-  2 PB1
-  3 PB2
-  4 PB3
-  5 PD3
-
-  Sink Col:
-  0 PB0
-  1 PB4
-  2 PB5
-  3 PD2
-  4 PD4
-  5 PD7
-
-  Serial:
-  FT232RL TXD PD0
-  FT232RL RXD PD1
-
-
-*/
-
-
-
 int main(void) {
 
     char buffer[64];
@@ -56,7 +25,6 @@ int main(void) {
         len = UART_RxString(buffer);
         if(len > 1){
 
-          UART_Printf("Recieved: %s, len: %d\n",buffer,len);
           bufIndx = 0;
           commandCounter = 0;
           noOfCommandedCols = 0;
@@ -65,47 +33,47 @@ int main(void) {
           // Set to invalid values
           //demand = -1;
           duty = 255;
+        
           
-          if(1==0)
-            UART_Printf("Invalid command");
-          else{
-            while(commandCounter < 2) {
-              switch (commandCounter) {
-                  case 0:
-                      demandStr = &buffer[bufIndx];
-                      demand = atol(demandStr);
-                      break;
-                  case 1:
-                      dutyStr = &buffer[bufIndx];
-                      duty = atoi(dutyStr);
-                      break;
-              }
-              commandCounter++;
-              
-              //Iterate through to next comma
-              if(commandCounter < 2) {
-                  while (buffer[bufIndx] != ',') {
-                      bufIndx++;
-                  }
-                  bufIndx++;
-              }
-
+          while(commandCounter < 2) {
+            switch (commandCounter) {
+                case 0:
+                    demandStr = &buffer[bufIndx];
+                    demand = atol(demandStr);
+                    break;
+                case 1:
+                    dutyStr = &buffer[bufIndx];
+                    duty = atoi(dutyStr);
+                    break;
+            }
+            commandCounter++;
+            
+            //Iterate through to next comma
+            if(commandCounter < 2) {
+                while (buffer[bufIndx] != ',') {
+                    bufIndx++;
+                }
+                bufIndx++;
             }
 
-            // Split long into bytes
-            byte0= demand & 0x0000FF;
-            byte1= (demand & 0x00FF00)>>8;
-            byte2= (demand & 0xFF0000)>>16;
-
-            noOfCommandedCols += countSetBits(byte0);
-            noOfCommandedCols += countSetBits(byte1);
-            noOfCommandedCols += countSetBits(byte2);
-
-            if((demand > 1835008) || (demand < 0) || (duty > 100) || (noOfCommandedCols > MAX_COLS))
-              UART_Printf("Invalid command\n");
-            else
-              setLED(byte0,byte1,byte2,duty);
           }
+
+          // Split long into bytes
+          byte0= demand & 0x0000FF;
+          byte1= (demand & 0x00FF00)>>8;
+          byte2= (demand & 0xFF0000)>>16;
+
+          noOfCommandedCols += countSetBits(byte0);
+          noOfCommandedCols += countSetBits(byte1);
+          noOfCommandedCols += countSetBits(byte2);
+
+          if((demand > 1835008) || (demand < 0) || (duty > 100) || (noOfCommandedCols > MAX_COLS))
+            UART_Printf("Invalid command\n");
+          else{
+            UART_Printf("OK\r\n");
+            setLED(byte0,byte1,byte2,duty);
+          }
+          
 
         }
     }
