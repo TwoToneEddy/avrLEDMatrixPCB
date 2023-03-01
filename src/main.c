@@ -1,4 +1,14 @@
 #include "main.h"
+/*
+avrdude: safemode: Fuses OK (E:F5, H:DE, L:E2)
+Command example:
+  7,100\r\n
+
+Jumpers:
+SCLR  ->  VCC
+OE    ->  GNS
+
+*/
 
 int main(void) {
 
