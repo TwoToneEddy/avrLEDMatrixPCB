@@ -8,23 +8,21 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "/home/lee/avrLEDMatrixPCB/include",
-                "/home/lee/avrLEDMatrixPCB/src",
-                "/home/lee/.platformio/packages/tool-unity",
+                "/home/lee/Repositories/avrLEDMatrixPCB/include",
+                "/home/lee/Repositories/avrLEDMatrixPCB/src",
                 ""
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "/home/lee/avrLEDMatrixPCB/include",
-                    "/home/lee/avrLEDMatrixPCB/src",
-                    "/home/lee/.platformio/packages/tool-unity",
+                    "/home/lee/Repositories/avrLEDMatrixPCB/include",
+                    "/home/lee/Repositories/avrLEDMatrixPCB/src",
                     ""
                 ]
             },
             "defines": [
                 "F_CPU=8000000L",
-                "PLATFORMIO=50204",
+                "PLATFORMIO=60107",
                 "__AVR_ATmega328P__",
                 ""
             ],
