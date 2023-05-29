@@ -36,6 +36,7 @@ int main(void) {
     uint8_t bufIndx = 0;
     uint8_t commandCounter = 0;
     char *dutyStr;
+    int row1Duty = 0;
     UART_Init(9600);
     
     
@@ -81,8 +82,17 @@ int main(void) {
               }
 
             }
-            clearLEDS();
+            //clearLEDS();
+
+            // Store value of row 1
+            if(row == 1){
+              row1Duty = duty;
+            }
+
             setLED(row,col,duty);
+
+            // Set row 1 
+            setLED(1,0,row1Duty);
         }
 
           if(buffer[0] == 'T'){

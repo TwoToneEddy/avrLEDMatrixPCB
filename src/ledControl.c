@@ -6,13 +6,14 @@ volatile uint16_t * getRowPtr(int col){
   {
   case 0:
     DDRD |= 1 << PIND6;
-    DDRD &= ~(1 << PIND5);
+    //DDRD &= ~(1 << PIND5);
     return (volatile uint16_t *)&OCR0A;
     break;
   case 1:
     DDRD |= 1 << PIND5;
-    DDRD &= ~(1 << PIND6);
+    //DDRD &= ~(1 << PIND6);
     return (volatile uint16_t *)&OCR0B;
+    break;
   case 2:
     DDRB |= 1 << PINB1;
     return &OCR1A;
@@ -78,7 +79,7 @@ int setLED(int row, int col, int duty){
   rowPtr = getRowPtr(row);
 
   setRowAndDuty(rowPtr,duty);
-  setColOutput(col,duty>0);
+  //setColOutput(col,duty>0);
 
   return 0;
 }
